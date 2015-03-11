@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+@import "variables_all";
+
+.ax-popup-widget {
+
+   .ax-show-on-top {
+      z-index: $ax-zindex-popup-on-top;
+   }
+}
