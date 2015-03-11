@@ -11,7 +11,7 @@ Shows a modal popup with content areas for other widgets.
 ## Appearance
 ![Illustration of the AxPopupWidget](docs/img/example_1.png)
 
-A AxPopupWidget with displays a popup with a headline and a text.
+An AxPopupWidget with displays a popup with a headline and a text.
 
 
 
