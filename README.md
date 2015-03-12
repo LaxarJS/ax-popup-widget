@@ -171,9 +171,9 @@ The widget supports the following event patterns as specified by the [LaxarJS Pa
 
 
 #### Flags
-* Flag: visibility.flag
-* Role: Sender
-* Description: The flag is `true` while the popup is visible.
+* Flag: `visibility.flag`
+   * Role: Sender
+   * Description: The flag is `true` while the popup is visible.
 
 
 #### Visibility
