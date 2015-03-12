@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v1.4.1
+
 - [#3](https://github.com/LaxarJS/ax-popup-widget/issues/3): Documentation: Fixed layout of section flags
 - [#2](https://github.com/LaxarJS/ax-popup-widget/issues/2): Documentation: Fixed anchor link to the section "Integration"
 
