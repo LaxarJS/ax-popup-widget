@@ -5,7 +5,7 @@ Shows a modal popup with content areas for other widgets.
 * [Appearance](#appearance)
 * [Usage](#usage)
 * [Features](#features)
-* [Integration](#Integration)
+* [Integration](#integration)
 * [References](#references)
 
 ## Appearance

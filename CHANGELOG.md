@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#2](https://github.com/LaxarJS/ax-popup-widget/2): Documentation: Fixed anchor link to the section "Integration"
+
 
 ## v1.4.0
 
