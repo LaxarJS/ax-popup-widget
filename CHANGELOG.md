@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v1.4.2
+
 - [#4](https://github.com/LaxarJS/ax-popup-widget/issues/4): styling: Fixed appearance in default.theme
 
 
