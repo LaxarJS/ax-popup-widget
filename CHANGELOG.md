@@ -2,6 +2,7 @@
 
 ## Last Changes
 
+- [#4](https://github.com/LaxarJS/ax-popup-widget/issues/4): styling: Fixed appearance in default.theme
 - [#3](https://github.com/LaxarJS/ax-popup-widget/issues/3): Documentation: Fixed layout of section flags
 - [#2](https://github.com/LaxarJS/ax-popup-widget/issues/2): Documentation: Fixed anchor link to the section "Integration"
 
