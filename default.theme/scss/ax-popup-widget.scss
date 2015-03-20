@@ -2,9 +2,103 @@
 
 @import "variables_all";
 
+$ax-base-box-shadow: 2px 5px 10px rgba(0,0,0,.2) !default;
+$ax-icon-close: $fa-var-times !default;
+
+$ax-popup-close-icon: $ax-icon-close !default;
+$ax-popup-close-width: $ax-icon-close-width !default;
+$ax-popup-close-top: 10px !default;
+$ax-popup-close-right: 20px !default;
+
+$ax-popup-padding: 15px 20px !default;
+$ax-popup-box-shadow: $ax-base-box-shadow !default;
+$ax-popup-show-transition: height 400ms ease-in-out !default;
+
+$ax-popup-border-width: $ax-base-border-width !default;
+$ax-popup-border-radius: $border-radius-large !default;
+
+$ax-popup-backdrop-background: $modal-backdrop-bg !default;
+$ax-popup-backdrop-opacity: 0.5 !default;
+
+
 .ax-popup-widget {
 
    .ax-show-on-top {
       z-index: $ax-zindex-popup-on-top;
    }
+
+   .ax-popup-backdrop {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: ($zindex-modal-background - 10);
+
+      opacity: $ax-popup-backdrop-opacity;
+      filter: alpha(opacity=( $ax-popup-backdrop-opacity * 100 ));
+      background-color: $ax-popup-backdrop-background;
+
+      // Fade for backdrop
+      &.fade { @include opacity(0); }
+      &.in { @include opacity(.5); }
+   }
+
+   .ax-popup {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: $zindex-modal;
+      display: none;
+      width: auto;
+      background-color: $modal-content-bg;
+
+      border: $ax-popup-border-width solid $modal-content-border-color;
+      border-radius: $ax-popup-border-radius;
+
+      // Remove focus outline from opened modal
+      outline: none;
+
+      @include box-shadow( $ax-popup-box-shadow );
+
+      &.ax-showing {
+         @include transition( $ax-popup-show-transition );
+      }
+
+      .close {
+         position: absolute;
+         z-index: 1;
+         top: $ax-popup-close-top;
+         right: $ax-popup-close-right;
+
+         &:after {
+            @include ax-set-icon( $ax-popup-close-icon );
+         }
+      }
+   }
+
+   .ax-popup-body {
+      @include clearfix();
+
+      max-height: none;
+      display: table;
+      padding: $ax-popup-padding;
+
+      .modal-header {
+         padding-right: $ax-popup-close-width;
+         min-height: $ax-popup-close-width;
+         border-bottom: $ax-base-border;
+         margin-bottom: $ax-unit-vertical-double;
+
+         h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            line-height: 1.428571429;
+         }
+      }
+
+      .modal-footer {
+         margin-top: $ax-unit-vertical-double;
+      }
+   }
+
 }
