@@ -11,5 +11,5 @@
   margin-top: 15px;
   margin-right: 15px;
   z-index: 1;
-  position: relative;
+  position: absolute;
 }
