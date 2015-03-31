@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v1.5.0
+
 - [#5](https://github.com/LaxarJS/ax-popup-widget/issues/5): styling: Use Bootstrap CSS classes
 - [#4](https://github.com/LaxarJS/ax-popup-widget/issues/4): styling: Fixed appearance in default.theme
 - [#3](https://github.com/LaxarJS/ax-popup-widget/issues/3): Documentation: Fixed layout of section flags
