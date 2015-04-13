@@ -2,6 +2,10 @@
 
 ## Last Changes
 
+
+
+## v1.5.1
+
 - [#6](https://github.com/LaxarJS/ax-popup-widget/issues/6): styling: Fixed position of optional close button
 
 
