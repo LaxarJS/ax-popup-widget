@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v2.0.0
+
 - [#7](https://github.com/LaxarJS/ax-popup-widget/issues/7): Updated to LaxarJS 1.0.0 style controls
     + **BREAKING CHANGE:** see ticket for details
 - [#6](https://github.com/LaxarJS/ax-popup-widget/issues/6): styling: Fixed position of optional close button
