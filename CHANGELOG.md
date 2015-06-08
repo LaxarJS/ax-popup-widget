@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#8](https://github.com/LaxarJS/ax-popup-widget/issues/8): Updated LaxarJS dependencies and updated contribution information
+
 
 ## v2.0.0
 
