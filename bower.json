@@ -7,11 +7,11 @@
       "url": "https://github.com/LaxarJS/ax-popup-widget.git"
    },
    "dependencies": {
-      "laxar": "LaxarJS/laxar#^1.0.0-alpha.14",
-      "laxar-patterns": "LaxarJS/laxar-patterns#^1.0.0-alpha.3",
-      "laxar-uikit": "LaxarJS/laxar-uikit#^1.0.0-alpha.7",
+      "laxar":  "^1.0.0",
+      "laxar-patterns": "^1.0.0",
+      "laxar-uikit":  "^1.0.0",
 
-      "laxar-layer-control": "LaxarJS/ax-layer-control#^1.0.0-alpha.0"
+      "laxar-layer-control":  "^1.0.0"
    },
    "devDependencies": {
       "es5-shim": "es-shims/es5-shim#^2.3.x",
