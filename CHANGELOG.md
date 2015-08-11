@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#13](https://github.com/LaxarJS/ax-popup-widget/pull/13): Added a `.travis.yml` for open continuous integration
+
 
 ## v2.1.0
 
