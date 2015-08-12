@@ -4,9 +4,10 @@
  * http://laxarjs.org/license
  */
 define( [
+   'json!../widget.json',
    '../ax-popup-widget',
    'laxar/laxar_testing'
-], function( controller, ax ) {
+], function( descriptor, controller, ax ) {
    'use strict';
 
    describe( 'An AxPopupWidget', function() {
@@ -305,7 +306,7 @@ define( [
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    function testBedAfterDidNavigate( self, features ) {
-      var testBed = ax.testing.portalMocksAngular.createControllerTestBed( 'laxarjs/ax-popup-widget' );
+      var testBed = ax.testing.portalMocksAngular.createControllerTestBed( descriptor );
       testBed.useWidgetJson();
       testBed.featuresMock = features;
       testBed.widgetMock.id = 'popup';

@@ -1,5 +1,5 @@
 {
-   "name": "laxarjs/ax-popup-widget",
+   "name": "laxar-popup-widget",
    "version": "2.2.0-pre",
    "license": "MIT",
    "repository": {
@@ -7,7 +7,7 @@
       "url": "https://github.com/LaxarJS/ax-popup-widget.git"
    },
    "dependencies": {
-      "laxar":  "^1.0.0",
+      "laxar":  "^1.0.5",
       "laxar-patterns": "^1.0.0",
       "laxar-uikit":  "^1.0.0",
 
