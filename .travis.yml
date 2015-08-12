@@ -12,10 +12,12 @@ before_install:
    - echo "{}" > "package.json"
    - export PATH="$PATH:$(npm bin)"
 install:
-   - npm install "grunt-laxar@${GRUNT_LAXAR_VERSION}"
+   - npm install "codecov.io" "grunt-laxar@${GRUNT_LAXAR_VERSION}"
    - cp node_modules/grunt-laxar/widgets/package.json package.json
    - npm install
    - bower install "laxar#${LAXAR_VERSION}"
+after_success:
+   - cat lcov.info | codecov
 notifications:
    irc:
       channels: "chat.freenode.net#laxarjs"
