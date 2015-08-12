@@ -1,4 +1,4 @@
-# AxPopupWidget
+# AxPopupWidget [![Build Status](https://travis-ci.org/LaxarJS/ax-popup-widget.svg?branch=master)](https://travis-ci.org/LaxarJS/ax-popup-widget)
 Shows a modal popup with content areas for other widgets.
 
 ## Content
