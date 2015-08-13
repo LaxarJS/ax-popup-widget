@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v2.2.0
+
 - [#10](https://github.com/LaxarJS/ax-popup-widget/pull/10): Support AMD references (and installation through bower)
 - [#13](https://github.com/LaxarJS/ax-popup-widget/pull/13): Added a `.travis.yml` for open continuous integration
 
