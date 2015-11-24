@@ -10,7 +10,6 @@
       "laxar":  "^1.0.5",
       "laxar-patterns": "^1.0.0",
       "laxar-uikit":  "^1.0.0",
-
       "laxar-layer-control":  "^1.0.0"
    },
    "devDependencies": {

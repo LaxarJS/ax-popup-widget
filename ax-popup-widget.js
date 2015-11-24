@@ -51,6 +51,21 @@ define( [
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+      $scope.model.handleBackdropClicked = function() {
+         if( !$scope.features.backdropClose.enabled ) {
+            return;
+         }
+         $scope.$broadcast( 'closeLayerForced' );
+      };
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      $scope.model.preventClosingPopup = function( event ) {
+         event.stopPropagation();
+      };
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       $scope.$on( '$destroy', function() {
          closeActionHandler();
       } );

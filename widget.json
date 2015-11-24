@@ -78,6 +78,17 @@
             }
          },
 
+         "backdropClose": {
+            "type": "object",
+            "description": "Allow the user to close the popup by a backdrop click.",
+            "properties": {
+               "enabled": {
+                  "type": "boolean",
+                  "default": false
+               }
+            }
+         },
+
          "forcedClose": {
             "type": "object",
             "description": "React to the user forcing the popup to close.",

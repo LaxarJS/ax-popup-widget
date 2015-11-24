@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#12](https://github.com/LaxarJS/ax-popup-widget/issues/12): Added feature close by backdrop click
+
 
 ## v2.2.0
 

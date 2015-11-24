@@ -120,7 +120,7 @@ The widget MUST prevent the key default action.
 The style of the icon is determined by the theme.
 
 ### 7. Forced Close of the Popup (forcedClose)
-*R7.1* If the popup is closed by the close icon or the ESC key, a configured action MUST be triggered.
+*R7.1* If the popup is closed by the close icon or the ESC key or a backdrop click, a configured action MUST be triggered.
 The event MUST include the DOM ID which was used to create the popup.
 
 ### 8. Providing a Content Area (content)
@@ -148,6 +148,11 @@ The `tabindex` attribute of the child DOM elements MUST be considered.
 ### 11. Prevent the Body Scrolling (preventBodyScrolling)
 *R11.1* It MUST be configurable if the AxPopoverWidget prevents the scrolling of the body element when displaying its popover.
 The default is to prevent the scrolling.
+
+### 12. Closing the Popup by a Click of the Backdrop (backdropClose)
+*R12.1* The widget MUST allow to close the popup by clicking the backdrop.
+It MUST be possible to disable this feature.
+
 
 ## Integration
 ### Patterns
