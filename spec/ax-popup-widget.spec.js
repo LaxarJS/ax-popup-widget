@@ -28,19 +28,19 @@ define( [
             jasmine.Clock.tick( 0 );
          }
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          beforeEach( function() {
             testBed = testBedAfterDidNavigate( this, defaultFeatures() );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          afterEach( function() {
             tearDown( testBed );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'reads the anchor element from the according takeActionRequest (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
@@ -48,7 +48,7 @@ define( [
             expect( testBed.scope.model.anchorElementId ).toEqual( 'popup_layer' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'responds with a didTakeAction event to the first configured open action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
@@ -56,7 +56,7 @@ define( [
             expect( replies[0].meta.name ).toEqual( 'didTakeAction.myOpenAction' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'responds with a didTakeAction event to the second configured open action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOtherOpenAction' );
@@ -64,7 +64,7 @@ define( [
             expect( replies[0].meta.name ).toEqual( 'didTakeAction.myOtherOpenAction' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'does nothing for the wrong open action action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myFalseOpenAction' );
@@ -72,7 +72,7 @@ define( [
             expect( replies.length ).toEqual( 0 );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'does nothing on successive events', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
@@ -81,19 +81,19 @@ define( [
             expect( replies.length ).toEqual( 0 );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sends a flag indicating its visibility (R4.1)', function() {
             var mySpy = jasmine.createSpy();
             testBed.eventBusMock.subscribe( 'didChangeFlag', mySpy );
             publishTakeActionRequestWithAction( 'myOpenAction' );
 
-            expect( mySpy.calls[0].args[1].name ).toEqual( 'didChangeFlag.visible-popup.true' );
-            expect( mySpy.calls[0].args[0].flag ).toEqual( 'visible-popup' );
-            expect( mySpy.calls[0].args[0].state ).toEqual( true );
+            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.true' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].flag ).toEqual( 'visible-popup' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].state ).toEqual( true );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'processes change requests for the visibility of the provided areas (R4.3)', function() {
             expect( testBed.scope.eventBus.subscribe ).toHaveBeenCalledWith(
@@ -113,7 +113,7 @@ define( [
             );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'triggers change requests for the visibility of the provided areas when opened/closed (R4.4)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
@@ -160,7 +160,7 @@ define( [
 
       } );
 
-      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       describe( 'with a configured onActions property of close feature', function() {
 
@@ -177,7 +177,7 @@ define( [
             jasmine.Clock.tick( 0 );
          }
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          beforeEach( function() {
             var features = defaultFeatures();
@@ -185,6 +185,9 @@ define( [
                action: 'closedByUser'
             };
             features.closeIcon = {
+               enabled: true
+            };
+            features.backdropClose = {
                enabled: true
             };
             testBed = testBedAfterDidNavigate( this, features );
@@ -197,13 +200,13 @@ define( [
             spyOn( testBed.scope, '$broadcast' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          afterEach( function() {
             tearDown( testBed );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sends a flag indicating its visibility (R4.1)', function() {
             var mySpy = jasmine.createSpy();
@@ -215,7 +218,7 @@ define( [
             expect( mySpy.calls[0].args[0].state ).toEqual( false );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'responds with a didTakeAction event to the first configured close action (R5.1)', function() {
             publishTakeActionRequestWithAction( 'myCloseAction' );
@@ -223,7 +226,7 @@ define( [
             expect( replies[0].meta.name ).toEqual( 'didTakeAction.myCloseAction' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'responds with a didTakeAction event to the second configured close action (R5.1)', function() {
             publishTakeActionRequestWithAction( 'myOtherCloseAction' );
@@ -231,7 +234,7 @@ define( [
             expect( replies[0].meta.name ).toEqual( 'didTakeAction.myOtherCloseAction' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'does nothing for the wrong close action action (R5.1)', function() {
             publishTakeActionRequestWithAction( 'myFalseCloseAction' );
@@ -239,7 +242,7 @@ define( [
             expect( replies.length ).toEqual( 0 );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'on close icon click triggers a forced close (R6.3)', function() {
             testBed.scope.model.handleCloseIconClicked();
@@ -247,7 +250,7 @@ define( [
             expect( testBed.scope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sends a configured action in the takeActionRequest event when closed by force (R7.1)', function() {
             var mySpy = jasmine.createSpy();
@@ -256,14 +259,21 @@ define( [
             testBed.scope.model.layerConfiguration.whenClosed( true );
             jasmine.Clock.tick( 0 );
 
-            expect( mySpy.calls[0].args[1].name ).toEqual( 'takeActionRequest.closedByUser' );
-            expect( mySpy.calls[0].args[0].action ).toEqual( 'closedByUser' );
-            expect( mySpy.calls[0].args[0].anchorDomElement ).toEqual( 'anchorElementThingy' );
+            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'takeActionRequest.closedByUser' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].action ).toEqual( 'closedByUser' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].anchorDomElement ).toEqual( 'anchorElementThingy' );
          } );
 
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+         it( 'backdrop click triggers a forced close (R12.1)', function() {
+            testBed.scope.model.handleBackdropClicked();
+
+            expect( testBed.scope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
+         } );
       } );
 
-      ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       describe( 'with a configured feature preventBodyScrolling', function() {
 
@@ -283,7 +293,7 @@ define( [
             expect( testBed.scope.model.layerConfiguration.preventBodyScrolling ).toBe( true );
          } );
 
-         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'simply forwards a falsy enabled value to the layer (R11.1)', function() {
             var features = defaultFeatures();
