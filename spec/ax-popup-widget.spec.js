@@ -42,6 +42,15 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+         it( 'sets the class "modal-open" on body (R1.4)', function() {
+            spyOn( testBed.injections.modalService , 'setClassOnBody' );
+            publishTakeActionRequestWithAction( 'myOpenAction' );
+
+            expect( testBed.injections.modalService.setClassOnBody ).toHaveBeenCalled();
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
          it( 'reads the anchor element from the according takeActionRequest (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
 
@@ -53,7 +62,7 @@ define( [
          it( 'responds with a didTakeAction event to the first configured open action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
 
-            expect( replies[0].meta.name ).toEqual( 'didTakeAction.myOpenAction' );
+            expect( replies[ 0 ].meta.name ).toEqual( 'didTakeAction.myOpenAction' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +70,7 @@ define( [
          it( 'responds with a didTakeAction event to the second configured open action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOtherOpenAction' );
 
-            expect( replies[0].meta.name ).toEqual( 'didTakeAction.myOtherOpenAction' );
+            expect( replies[ 0 ].meta.name ).toEqual( 'didTakeAction.myOtherOpenAction' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +147,7 @@ define( [
 
 
             publishTakeActionRequestWithAction( 'myCloseAction' );
+
             expect( testBed.scope.eventBus.publishAndGatherReplies ).toHaveBeenCalledWith(
                'changeWidgetVisibilityRequest.popup.false', {
                   widget: 'popup',
@@ -208,14 +218,23 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+         it( 'removes the class "modal-open" on body (R1.4)', function() {
+            spyOn( testBed.injections.modalService , 'unsetClassOnBody' );
+            publishTakeActionRequestWithAction( 'myCloseAction' );
+
+            expect( testBed.injections.modalService.unsetClassOnBody ).toHaveBeenCalled();
+         } );
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
+
          it( 'sends a flag indicating its visibility (R4.1)', function() {
             var mySpy = jasmine.createSpy();
             testBed.eventBusMock.subscribe( 'didChangeFlag', mySpy );
             publishTakeActionRequestWithAction( 'myCloseAction' );
 
-            expect( mySpy.calls[0].args[1].name ).toEqual( 'didChangeFlag.visible-popup.false' );
-            expect( mySpy.calls[0].args[0].flag ).toEqual( 'visible-popup' );
-            expect( mySpy.calls[0].args[0].state ).toEqual( false );
+            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.false' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].flag ).toEqual( 'visible-popup' );
+            expect( mySpy.calls[ 0 ].args[ 0 ].state ).toEqual( false );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -313,6 +332,7 @@ define( [
 
       } );
    } );
+
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
    function testBedAfterDidNavigate( self, features ) {
@@ -329,10 +349,15 @@ define( [
                   className: ''
                };
             }
+         },
+         modalService: {
+            setClassOnBody: function(){},
+            unsetClassOnBody: function(){}
          }
       };
 
       testBed.setup();
+
       testBed.scope.eventBus.publish( 'didNavigate' );
       jasmine.Clock.tick( 0 );
 

@@ -75,6 +75,8 @@ For full configuration options refer to the [widget.json](widget.json).
 *R1.3* If the popup is displayed, the page in the background MUST be blocked for interaction.
 The visual effect to display this MUST be implemented through the theme.
 
+*R1.4* If the popup is displayed, a CSS class on the body MUST be set.
+
 ### 2. Position on the Page (position)
 *R2.1* The widget MUST expect to be in a widget area which is upper than the normal page content but deeper than any popovers.
 
