@@ -382,6 +382,9 @@ define( [
          },
          content: {
             layout: 'popup_layout'
+         },
+         visibility: {
+            flag: 'visible-popup'
          }
       };
    }
