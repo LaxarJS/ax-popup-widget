@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v2.3.0
+
 - [#11](https://github.com/LaxarJS/ax-popup-widget/issues/11): Setting a class on body element when the popup is displayed
 - [#12](https://github.com/LaxarJS/ax-popup-widget/issues/12): Added feature close by backdrop click
 
