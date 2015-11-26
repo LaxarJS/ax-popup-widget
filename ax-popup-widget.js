@@ -15,9 +15,9 @@ define( [
 
    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-   Controller.$inject = [ '$scope', 'modalService' ];
+   Controller.$inject = [ '$scope', '$q', 'modalService' ];
 
-   function Controller( $scope, modalService ) {
+   function Controller( $scope, $q, modalService ) {
 
       $scope.model = {
          popupLayerId: 'popupLayer',
@@ -134,6 +134,9 @@ define( [
 
       function publishVisibilityFlag( state ) {
          var visibilityFlag = $scope.features.visibility.flag;
+         if( !visibilityFlag ) {
+            return $q.resolve();
+         }
          return $scope.eventBus.publish( 'didChangeFlag.' + visibilityFlag + '.' + state, {
             flag: visibilityFlag,
             state: state

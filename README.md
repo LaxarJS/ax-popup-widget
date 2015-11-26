@@ -99,7 +99,8 @@ The event MUST include the DOM ID of the anchor element.
 The widget MUST confirm the action with an event.
 
 ### 4. Visibility (visibility)
-*R4.1* The widget MUST report the visibility of the popup with a configurable flag.
+*R4.1* A flag MUST be configurable.
+If the flag is configured the widget MUST report the visibility of the popup with this flag.
 
 *R4.2* It MUST be configurable if the popup has a very high value for its CSS property `z-index`.
 The value is provided by the theme.

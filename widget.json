@@ -39,8 +39,7 @@
                "flag": {
                   "type": "string",
                   "description": "Name of the flag indicating the visibility of the popup.",
-                  "format": "topic",
-                  "default": "visible-popup"
+                  "format": "topic"
                },
                "onTop": {
                   "type": "boolean",
