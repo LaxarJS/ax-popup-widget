@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v3.0.0
+
 - [#16](https://github.com/LaxarJS/ax-popup-widget/issues/16): Visibility flag: No default value anymore 
     + **BREAKING CHANGE:** see ticket for details
 
