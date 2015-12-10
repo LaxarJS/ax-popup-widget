@@ -25,7 +25,8 @@
                   "description": "Names of the actions that trigger opening of the popup.",
                   "items": {
                      "type": "string",
-                     "format": "topic"
+                     "format": "topic",
+                     "axRole": "inlet"
                   },
                   "default": [ ]
                }
@@ -38,8 +39,9 @@
             "properties": {
                "flag": {
                   "type": "string",
-                  "description": "Name of the flag indicating the visibility of the popup.",
-                  "format": "topic"
+                  "format": "topic",
+                  "axRole": "outlet",
+                  "description": "Name of the flag indicating the visibility of the popup."
                },
                "onTop": {
                   "type": "boolean",
@@ -58,7 +60,8 @@
                   "description": "Names of the actions that trigger closing of the popup.",
                   "items": {
                      "type": "string",
-                     "format": "topic"
+                     "format": "topic",
+                     "axRole": "inlet"
                   },
                   "default": [ ]
                }
