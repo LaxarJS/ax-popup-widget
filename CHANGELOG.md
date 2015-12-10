@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v3.1.0
+
 - [#17](https://github.com/LaxarJS/ax-popup-widget/issues/17): Expanded the widget definition
 
 
