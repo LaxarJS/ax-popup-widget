@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#18](https://github.com/LaxarJS/ax-popup-widget/issues/18): Use laxar-mocks instead of laxar-testing now
+
 
 ## v3.1.0
 

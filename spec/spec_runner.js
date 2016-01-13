@@ -1,15 +1,16 @@
 /**
  * Copyright 2015 aixigo AG
  * Released under the MIT license.
- * http://laxarjs.org/license
+ * http://www.laxarjs.org
  */
 ( function( global ) {
    'use strict';
    global.laxarSpec = {
-      title: 'AxPopupWidget Specification',
+      title: 'ax-popup-widget Specification',
       tests: [
          'ax-popup-widget.spec'
       ],
-      requireConfig: {}
+      testRunner: 'laxar-mocks',
+      jasmineMajorVersion: 2
    };
 } )( this );

@@ -5,56 +5,115 @@
  */
 define( [
    'json!../widget.json',
-   '../ax-popup-widget',
-   'laxar/laxar_testing'
-], function( descriptor, controller, ax ) {
+   'laxar-mocks',
+   'angular-mocks',
+   'laxar'
+], function( descriptor, axMocks, ngMocks, ax ) {
    'use strict';
 
    describe( 'An AxPopupWidget', function() {
 
+      var widgetEventBus;
+      var widgetScope;
+      var testEventBus;
+
+      var layoutLoader;
+      var modalService;
+      var replies;
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function createSetup( widgetConfiguration ) {
+
+         beforeEach( axMocks.createSetupForWidget( descriptor, {
+            knownMissingResources: [ 'ax-layer-control.css' ]
+         } ) );
+
+         beforeEach( function() {
+            axMocks.widget.configure( widgetConfiguration );
+         } );
+
+         beforeEach( axMocks.widget.load );
+
+         beforeEach( function() {
+            ngMocks.inject( function( axLayoutLoader, _modalService_ ) {
+               layoutLoader = axLayoutLoader;
+               modalService = _modalService_;
+            } );
+
+            layoutLoader.load = function( layout ) {
+               return {
+                  html: '',
+                  css: '',
+                  className: ''
+               };
+            };
+            modalService.setClassOnBody = function(){};
+            modalService.unsetClassOnBody = function(){};
+
+            widgetScope = axMocks.widget.$scope;
+            widgetEventBus = axMocks.widget.axEventBus;
+            testEventBus = axMocks.eventBus;
+
+            axMocks.triggerStartupEvents();
+         } );
+      }
+
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      function defaultFeatures() {
+         return  {
+            open: {
+               onActions: [ 'myOpenAction', 'myOtherOpenAction' ]
+            },
+            close: {
+               onActions: [ 'myCloseAction', 'myOtherCloseAction' ]
+            },
+            content: {
+               layout: 'popup_layout'
+            },
+            visibility: {
+               flag: 'visible-popup'
+            }
+         };
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      afterEach( function() {
+         axMocks.tearDown();
+      } );
+
       describe( 'with a configured onActions property of open feature', function() {
 
-         var testBed;
-         var replies;
+         createSetup( defaultFeatures() );
 
          function publishTakeActionRequestWithAction( action ) {
-            testBed.eventBusMock
+            testEventBus
                .publishAndGatherReplies( 'takeActionRequest.' + action, {
                   action: action,
                   anchorDomElement: 'popup_layer'
                } ).then( function( arg ) {
                   replies = arg;
                } );
-            jasmine.Clock.tick( 0 );
+            testEventBus.flush();
          }
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         beforeEach( function() {
-            testBed = testBedAfterDidNavigate( this, defaultFeatures() );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         afterEach( function() {
-            tearDown( testBed );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
          it( 'sets the class "modal-open" on body (R1.4)', function() {
-            spyOn( testBed.injections.modalService , 'setClassOnBody' );
+            spyOn( modalService , 'setClassOnBody' );
             publishTakeActionRequestWithAction( 'myOpenAction' );
 
-            expect( testBed.injections.modalService.setClassOnBody ).toHaveBeenCalled();
+            expect( modalService.setClassOnBody ).toHaveBeenCalled();
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'reads the anchor element from the according takeActionRequest (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
-
-            expect( testBed.scope.model.anchorElementId ).toEqual( 'popup_layer' );
+            expect( widgetScope.model.anchorElementId ).toEqual( 'popup_layer' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +134,7 @@ define( [
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-         it( 'does nothing for the wrong open action action (R3.1)', function() {
+         it( 'does nothing for the wrong open action (R3.1)', function() {
             publishTakeActionRequestWithAction( 'myFalseOpenAction' );
 
             expect( replies.length ).toEqual( 0 );
@@ -94,29 +153,30 @@ define( [
 
          it( 'sends a flag indicating its visibility (R4.1)', function() {
             var mySpy = jasmine.createSpy();
-            testBed.eventBusMock.subscribe( 'didChangeFlag', mySpy );
+            testEventBus.subscribe( 'didChangeFlag', mySpy );
             publishTakeActionRequestWithAction( 'myOpenAction' );
 
-            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.true' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].flag ).toEqual( 'visible-popup' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].state ).toEqual( true );
+
+            expect( mySpy.calls.argsFor( 0 )[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.true' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].flag ).toEqual( 'visible-popup' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].state ).toEqual( true );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'processes change requests for the visibility of the provided areas (R4.3)', function() {
-            expect( testBed.scope.eventBus.subscribe ).toHaveBeenCalledWith(
-               'changeAreaVisibilityRequest.popup', jasmine.any( Function )
+            expect( widgetEventBus.subscribe ).toHaveBeenCalledWith(
+               'changeAreaVisibilityRequest.testWidget', jasmine.any( Function )
             );
 
-            testBed.eventBusMock.publish( 'changeAreaVisibilityRequest.popup.content.true', {
-               area: 'popup.content',
+            testEventBus.publish( 'changeAreaVisibilityRequest.testWidget.content.true', {
+               area: 'testWidget.content',
                visible: true
             } );
-            jasmine.Clock.tick( 0 );
-            expect( testBed.scope.eventBus.publish ).toHaveBeenCalledWith(
-               'didChangeAreaVisibility.popup.content.false', {
-                  area: 'popup.content',
+            testEventBus.flush();
+            expect( widgetEventBus.publish ).toHaveBeenCalledWith(
+               'didChangeAreaVisibility.testWidget.content.false', {
+                  area: 'testWidget.content',
                   visible: false
                }, jasmine.any( Object )
             );
@@ -126,21 +186,21 @@ define( [
 
          it( 'triggers change requests for the visibility of the provided areas when opened/closed (R4.4)', function() {
             publishTakeActionRequestWithAction( 'myOpenAction' );
-            expect( testBed.scope.eventBus.publishAndGatherReplies ).toHaveBeenCalledWith(
-               'changeWidgetVisibilityRequest.popup.true', {
-                  widget: 'popup',
+            expect( widgetEventBus.publishAndGatherReplies ).toHaveBeenCalledWith(
+               'changeWidgetVisibilityRequest.testWidget.true', {
+                  widget: 'testWidget',
                   visible: true
                }, jasmine.any( Object )
             );
 
-            testBed.eventBusMock.publish( 'changeAreaVisibilityRequest.popup.content.true', {
-               area: 'popup.content',
+            testEventBus.publish( 'changeAreaVisibilityRequest.testWidget.content.true', {
+               area: 'testWidget.content',
                visible: true
             } );
-            jasmine.Clock.tick( 0 );
-            expect( testBed.scope.eventBus.publish ).toHaveBeenCalledWith(
-               'didChangeAreaVisibility.popup.content.true', {
-                  area: 'popup.content',
+            testEventBus.flush();
+            expect( widgetEventBus.publish ).toHaveBeenCalledWith(
+               'didChangeAreaVisibility.testWidget.content.true', {
+                  area: 'testWidget.content',
                   visible: true
                }, jasmine.any( Object )
             );
@@ -148,21 +208,21 @@ define( [
 
             publishTakeActionRequestWithAction( 'myCloseAction' );
 
-            expect( testBed.scope.eventBus.publishAndGatherReplies ).toHaveBeenCalledWith(
-               'changeWidgetVisibilityRequest.popup.false', {
-                  widget: 'popup',
+            expect( widgetEventBus.publishAndGatherReplies ).toHaveBeenCalledWith(
+               'changeWidgetVisibilityRequest.testWidget.false', {
+                  widget: 'testWidget',
                   visible: false
                }, jasmine.any( Object )
             );
 
-            testBed.eventBusMock.publish( 'changeAreaVisibilityRequest.popup.content.false', {
-               area: 'popup.content',
+            testEventBus.publish( 'changeAreaVisibilityRequest.testWidget.content.false', {
+               area: 'testWidget.content',
                visible: false
             } );
-            jasmine.Clock.tick( 0 );
-            expect( testBed.scope.eventBus.publish ).toHaveBeenCalledWith(
-               'didChangeAreaVisibility.popup.content.false', {
-                  area: 'popup.content',
+            testEventBus.flush();
+            expect( widgetEventBus.publish ).toHaveBeenCalledWith(
+               'didChangeAreaVisibility.testWidget.content.false', {
+                  area: 'testWidget.content',
                   visible: false
                }, jasmine.any( Object )
             );
@@ -174,67 +234,60 @@ define( [
 
       describe( 'with a configured onActions property of close feature', function() {
 
-         var testBed;
-         var replies;
-
          function publishTakeActionRequestWithAction( action ) {
-            testBed.eventBusMock
+            testEventBus
                .publishAndGatherReplies( 'takeActionRequest.' + action, {
                   action: action
                } ).then( function( arg ) {
                   replies = arg;
                } );
-            jasmine.Clock.tick( 0 );
+            testEventBus.flush();
          }
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
+         var features = defaultFeatures();
+         features.forcedClose = {
+            action: 'closedByUser'
+         };
+         features.closeIcon = {
+            enabled: true
+         };
+         features.backdropClose = {
+            enabled: true
+         };
+
+         createSetup( features );
+
          beforeEach( function() {
-            var features = defaultFeatures();
-            features.forcedClose = {
-               action: 'closedByUser'
-            };
-            features.closeIcon = {
-               enabled: true
-            };
-            features.backdropClose = {
-               enabled: true
-            };
-            testBed = testBedAfterDidNavigate( this, features );
-            testBed.eventBusMock.publish( 'takeActionRequest.myOpenAction', {
+            testEventBus.publish( 'takeActionRequest.myOpenAction', {
                action: 'myOpenAction',
                anchorDomElement: 'anchorElementThingy'
             } );
-            jasmine.Clock.tick( 0 );
-            spyOn( testBed.scope.model.layerConfiguration, 'whenClosed' ).andCallThrough();
-            spyOn( testBed.scope, '$broadcast' );
-         } );
-
-         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-         afterEach( function() {
-            tearDown( testBed );
+            testEventBus.flush();
+            spyOn( widgetScope.model.layerConfiguration, 'whenClosed' ).and.callThrough();
+            spyOn( widgetScope, '$broadcast' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'removes the class "modal-open" on body (R1.4)', function() {
-            spyOn( testBed.injections.modalService , 'unsetClassOnBody' );
+            spyOn( modalService, 'unsetClassOnBody' );
             publishTakeActionRequestWithAction( 'myCloseAction' );
 
-            expect( testBed.injections.modalService.unsetClassOnBody ).toHaveBeenCalled();
+            expect( modalService.unsetClassOnBody ).toHaveBeenCalled();
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sends a flag indicating its visibility (R4.1)', function() {
             var mySpy = jasmine.createSpy();
-            testBed.eventBusMock.subscribe( 'didChangeFlag', mySpy );
+            testEventBus.subscribe( 'didChangeFlag', mySpy );
             publishTakeActionRequestWithAction( 'myCloseAction' );
 
-            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.false' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].flag ).toEqual( 'visible-popup' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].state ).toEqual( false );
+            expect( mySpy.calls.argsFor( 0 )[ 1 ].name ).toEqual( 'didChangeFlag.visible-popup.false' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].flag ).toEqual( 'visible-popup' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].state ).toEqual( false );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,129 +317,83 @@ define( [
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'on close icon click triggers a forced close (R6.3)', function() {
-            testBed.scope.model.handleCloseIconClicked();
+            widgetScope.model.handleCloseIconClicked();
 
-            expect( testBed.scope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
+            expect( widgetScope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'sends a configured action in the takeActionRequest event when closed by force (R7.1)', function() {
             var mySpy = jasmine.createSpy();
-            testBed.eventBusMock.subscribe( 'takeActionRequest', mySpy );
+            testEventBus.subscribe( 'takeActionRequest', mySpy );
 
-            testBed.scope.model.layerConfiguration.whenClosed( true );
-            jasmine.Clock.tick( 0 );
+            widgetScope.model.layerConfiguration.whenClosed( true );
+            testEventBus.flush();
 
-            expect( mySpy.calls[ 0 ].args[ 1 ].name ).toEqual( 'takeActionRequest.closedByUser' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].action ).toEqual( 'closedByUser' );
-            expect( mySpy.calls[ 0 ].args[ 0 ].anchorDomElement ).toEqual( 'anchorElementThingy' );
+            expect( mySpy.calls.argsFor( 0 )[ 1 ].name ).toEqual( 'takeActionRequest.closedByUser' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].action ).toEqual( 'closedByUser' );
+            expect( mySpy.calls.argsFor( 0 )[ 0 ].anchorDomElement ).toEqual( 'anchorElementThingy' );
          } );
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'backdrop click triggers a forced close (R12.1)', function() {
-            testBed.scope.model.handleBackdropClicked();
+            widgetScope.model.handleBackdropClicked();
 
-            expect( testBed.scope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
+            expect( widgetScope.$broadcast ).toHaveBeenCalledWith( 'closeLayerForced' );
          } );
       } );
 
       ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      describe( 'with a configured feature preventBodyScrolling', function() {
+      describe( 'with feature preventBodyScrolling enabled', function() {
+
+         var features = defaultFeatures();
+         features.preventBodyScrolling = {
+            enabled: true
+         };
+
+         createSetup(features);
+
+         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'simply forwards a truthy enabled value to the layer (R11.1)', function() {
-            var features = defaultFeatures();
-            features.preventBodyScrolling = {
-               enabled: true
-            };
-            var testBed = testBedAfterDidNavigate( this, features );
-
-            testBed.eventBusMock.publish( 'takeActionRequest.myOpenAction', {
+            testEventBus.publish( 'takeActionRequest.myOpenAction', {
                action: 'myOpenAction',
                anchorDomElement: 'anchorElementThingy'
             } );
-            jasmine.Clock.tick( 0 );
+            testEventBus.flush();
 
-            expect( testBed.scope.model.layerConfiguration.preventBodyScrolling ).toBe( true );
+            expect( widgetScope.model.layerConfiguration.preventBodyScrolling ).toBe( true );
          } );
+      } );
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      describe( 'with feature preventBodyScrolling not enabled', function() {
+
+         var features = defaultFeatures();
+         features.preventBodyScrolling = {
+            enabled: false
+         };
+
+         createSetup(features);
 
          /////////////////////////////////////////////////////////////////////////////////////////////////////
 
          it( 'simply forwards a falsy enabled value to the layer (R11.1)', function() {
-            var features = defaultFeatures();
-            features.preventBodyScrolling = {
-               enabled: false
-            };
-            var testBed = testBedAfterDidNavigate( this, features );
-
-            testBed.eventBusMock.publish( 'takeActionRequest.myOpenAction', {
+            testEventBus.publish( 'takeActionRequest.myOpenAction', {
                action: 'myOpenAction',
                anchorDomElement: 'anchorElementThingy'
             } );
-            jasmine.Clock.tick( 0 );
+            testEventBus.flush();
 
-            expect( testBed.scope.model.layerConfiguration.preventBodyScrolling ).toBe( false );
+            expect( widgetScope.model.layerConfiguration.preventBodyScrolling ).toBe( false );
          } );
 
       } );
+
    } );
-
-   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-   function testBedAfterDidNavigate( self, features ) {
-      var testBed = ax.testing.portalMocksAngular.createControllerTestBed( descriptor );
-      testBed.useWidgetJson();
-      testBed.featuresMock = features;
-      testBed.widgetMock.id = 'popup';
-      testBed.injections = {
-         LayoutLoader: {
-            load: function( layout ) {
-               return {
-                  html: '',
-                  css: '',
-                  className: ''
-               };
-            }
-         },
-         modalService: {
-            setClassOnBody: function(){},
-            unsetClassOnBody: function(){}
-         }
-      };
-
-      testBed.setup();
-
-      testBed.scope.eventBus.publish( 'didNavigate' );
-      jasmine.Clock.tick( 0 );
-
-      return testBed;
-   }
-
-   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-   function tearDown( testBed ) {
-      testBed.tearDown();
-   }
-
-   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-   function defaultFeatures() {
-      return  {
-         open: {
-            onActions: [ 'myOpenAction', 'myOtherOpenAction' ]
-         },
-         close: {
-            onActions: [ 'myCloseAction', 'myOtherCloseAction' ]
-         },
-         content: {
-            layout: 'popup_layout'
-         },
-         visibility: {
-            flag: 'visible-popup'
-         }
-      };
-   }
 
 } );
