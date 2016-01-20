@@ -7,13 +7,13 @@
       "url": "https://github.com/LaxarJS/ax-popup-widget.git"
    },
    "dependencies": {
-      "laxar": "~1.2.0-alpha.2",
-      "laxar-patterns": "~1.2.0-alpha.2",
+      "laxar": "~1.2.0",
+      "laxar-patterns": "~1.2.0",
       "laxar-uikit": "~1.1.0",
 
       "laxar-layer-control":  "^1.0.0"
    },
    "devDependencies": {
-      "laxar-mocks": "1.0.0-alpha.1"
+      "laxar-mocks": "~1.0.0"
    }
 }
