@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v3.2.1
+
 - [#19](https://github.com/LaxarJS/ax-popup-widget/issues/19): fix headline of readme
 
 
