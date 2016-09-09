@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#20](https://github.com/LaxarJS/ax-popup-widget/issues/20): fixed NPEs in then handlers
+
 
 ## v3.2.1
 
@@ -20,7 +22,7 @@
 
 ## v3.0.0
 
-- [#16](https://github.com/LaxarJS/ax-popup-widget/issues/16): Visibility flag: No default value anymore 
+- [#16](https://github.com/LaxarJS/ax-popup-widget/issues/16): Visibility flag: No default value anymore
     + **BREAKING CHANGE:** see ticket for details
 
 
