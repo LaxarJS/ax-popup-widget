@@ -2,6 +2,9 @@
 
 ## Last Changes
 
+
+## v3.2.2
+
 - [#20](https://github.com/LaxarJS/ax-popup-widget/issues/20): fixed NPEs in then handlers
 
 
