@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#21](https://github.com/LaxarJS/ax-popup-widget/issues/21): upgraded to LaxarJS v2
+    + **BREAKING CHANGE:** see ticket for details
 - [#20](https://github.com/LaxarJS/ax-popup-widget/issues/20): fixed NPEs in then handlers
 - [#19](https://github.com/LaxarJS/ax-popup-widget/issues/19): fix headline of readme
 

@@ -9,15 +9,20 @@ Shows a modal popup with content areas for other widgets.
 * [References](#references)
 
 ## Appearance
-![Illustration of the AxPopupWidget](docs/img/example_1.png)
+![Illustration of the laxar-popup-widget](docs/img/example_1.png)
 
-An AxPopupWidget with displays a popup with a headline and a text.
+An laxar-popup-widget with displays a popup with a headline and a text.
 
 
 
 ## Usage
 ### Installation
-For installation instruction take a look at the [LaxarJS documentation](https://github.com/LaxarJS/laxar/blob/master/docs/manuals/installing_widgets.md).
+
+For use within LaxarJS v2 projects:
+
+```console
+npm install laxar-popup-widget
+```
 
 ### Configuration Example
 ```json
@@ -57,9 +62,9 @@ For installation instruction take a look at the [LaxarJS documentation](https://
 ]
 ```
 
-Use this configuration on a page to get a AxPopupWidget instance.
-The AxPopupWidget must be in the widget area `popups` which is a special area provided by the theme.
-The AxPopupWidget defines its own section named by its ID `myPopup` plus the widget areas defined in the configured layout such as `header`.
+Use this configuration on a page to get a laxar-popup-widget instance.
+The laxar-popup-widget must be in the widget area `popups` which is a special area provided by the theme.
+The laxar-popup-widget defines its own section named by its ID `myPopup` plus the widget areas defined in the configured layout such as `header`.
 In this example only one AxHeadlineWidget is added with the headline "Popup Title" to the widget area `myPopup.header`.
 If the popup is displayed a headline "Popup Title" is displayed inside of it.
 
@@ -145,7 +150,7 @@ When the popup is closed, the element MUST be focused again.
 *R10.1* The widget MUST disable the tab navigation to elements of widgets which are in the page below the popup.
 The widget MUST allow the navigation to the elements below through configuration.
 
-*R10.2* It MUST be possible to navigate with the tab key from the last suitable element to the first suitable element of the AxPopupWidget and its included widgets.
+*R10.2* It MUST be possible to navigate with the tab key from the last suitable element to the first suitable element of the laxar-popup-widget and its included widgets.
 The `tabindex` attribute of the child DOM elements MUST be considered.
 
 ### 11. Prevent the Body Scrolling (preventBodyScrolling)

@@ -1,5 +1,5 @@
 {
-   "name": "ax-popup-widget",
+   "name": "laxar-popup-widget",
    "description": "Shows a popup with content areas for other widgets.",
 
    "integration": {
@@ -103,14 +103,14 @@
             }
          },
 
-         "content": {
+         "area": {
             "type": "object",
-            "description": "Display content within the popup.",
-            "required": [ "layout" ],
             "properties": {
-               "layout": {
+               "name": {
                   "type": "string",
-                  "description": "Path to the layout that is used within the popup."
+                  "description": "Name of the exported area used to show or hide content.",
+                  "format": "topic",
+                  "default": "content"
                }
             }
          },
