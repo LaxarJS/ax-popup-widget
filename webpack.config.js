@@ -5,6 +5,7 @@
  */
 /* eslint-env node */
 const pkg = require( './package.json' );
+const path = require( 'path' );
 
 const webpack = require( 'laxar-infrastructure' ).webpack( {
    devtool: '#source-map',
@@ -12,12 +13,12 @@ const webpack = require( 'laxar-infrastructure' ).webpack( {
    rules: [
       {
          test: /\.js$/,
-         exclude: 'node_modules',
+         exclude: path.resolve( __dirname, 'node_modules' ),
          loader: 'babel-loader'
       },
       {
          test: /\.spec.js$/,
-         exclude: 'node_modules',
+         exclude: path.resolve( __dirname, 'node_modules' ),
          loader: 'laxar-mocks/spec-loader'
       }
    ]

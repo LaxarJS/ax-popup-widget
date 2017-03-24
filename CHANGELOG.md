@@ -2,6 +2,8 @@
 
 ## Last Changes
 
+- [#22](https://github.com/LaxarJS/ax-popup-widget/issues/22): set explicitly absolute paths for webpack exclude config
+
 
 ## v4.0.0-alpha.0
 
