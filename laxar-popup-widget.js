@@ -144,7 +144,8 @@ function applyInternetExplorerCssHack( popupLayerId ) {
    if( style.styleSheet ) {
       const head = document.getElementsByTagName( 'head' )[ 0 ];
       style.type = 'text/css';
-      style.styleSheet.cssText = '.ax-popup-widget :before,.ax-popup-widget :after{content:none !important';
+      style.styleSheet.cssText =
+         '.laxar-popup-widget :before,.laxar-popup-widget :after{content:none !important';
       head.appendChild( style );
       // eslint-disable-next-line no-unused-expressions
       document.getElementById( popupLayerId ).offsetWidth;
