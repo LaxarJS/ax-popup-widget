@@ -3,6 +3,7 @@
 ## Last Changes
 
 
+## v4.0.0
 ## v4.0.0-rc.0
 
 - [#23](https://github.com/LaxarJS/laxar-popup-widget/issues/23): renamed repository to match artifact
